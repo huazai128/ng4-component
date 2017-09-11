@@ -1,0 +1,49 @@
+<div class="upload-holder">
+  <h3>Angular4 文件上传(后台使用node+mongodb+es6)</h3>
+  <div class="item" *ngFor="let item of queue;let i = index">
+    <img *ngIf="item.preview" [src]="item.preview">
+    <span>{{item.file.name}}</span>
+    <mdl-progress [progress]="item.progress"></mdl-progress>
+    <span *ngIf="item.progress">{{item.progress}}%</span>
+    <button mdl-button mdl-button-type="raised" (click)="item.start()"><mdl-icon style="font-size: 14px;">上传</mdl-icon></button>
+    <button mdl-button mdl-button-type="raised" mdl-colored (click)="item.remove()"><mdl-icon style="font-size: 14px;">删除</mdl-icon></button>
+  </div>
+  <div class="actions" *ngIf="queue.length">
+    <input type="file" multiple #file class="file-selector">
+    <button mdl-button mdl-button-type="raised" mdl-colored (click)="selectFiles()">选择上传</button>
+    <button mdl-button mdl-button-type="raised" mdl-colored (click)="uploadAll()">上传所有</button>
+    <button mdl-button mdl-button-type="raised" mdl-colored (click)="clearQueue()">删除所有</button>
+  </div>
+
+  <div class="actions">
+    <input type="file" type="file" multiple accept ng2Upload>
+  </div>
+
+  <div class="drop-area" ng2UploadDrop>
+    <span>拖拽文件上传</span>
+  </div>
+</div>
+
+
+<ng4-swiper class="swiper" [config]="config">
+  <div class="swiper-wrapper" >
+    <div class="swiper-slide" *ngFor="let item of images">
+      <p>{{item}}</p>
+    </div>
+  </div>
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+</ng4-swiper>
+
+<ng4-swiper class="swiper" [config]="config">
+  <div class="swiper-wrapper" >
+    <div class="swiper-slide" *ngFor="let item of images">
+      <p>{{item}}</p>
+    </div>
+  </div>
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+</ng4-swiper>
+

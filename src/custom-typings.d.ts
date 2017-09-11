@@ -46,6 +46,7 @@ import * as _ from 'lodash'
 // support NodeJS modules without type definitions
 declare module '*';
 
+
 /*
 // for legacy tslint etc to understand rename 'modern-lru' with your package
 // then comment out `declare module '*';`. For each new module copy/paste
@@ -60,12 +61,14 @@ declare module 'modern-lru' {
 declare var ENV: string;
 declare var HMR: boolean;
 declare var System: SystemJS;
+declare var Swiper:any;
+declare var Quill:any;
 
 interface SystemJS {
   import: (path?: string) => Promise<any>;
 }
 
-interface GlobalEnvironment {
+interface GlobalEnvironment {A
   ENV: string;
   HMR: boolean;
   SystemJS: SystemJS;

@@ -1,0 +1,17 @@
+{
+  "extends":"../tsconfig.json",
+  "compilerOptions": {
+    "outDir":"../build/demo",
+    "module": "es6",
+    "sourceMap": true,
+    "baseUrl":"",
+    "types":[
+      "node",
+      "jquery"
+    ]
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ]
+}

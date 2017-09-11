@@ -3,6 +3,7 @@
  */
 
 const webpack = require('webpack');
+const path = require("path");
 const helpers = require('./helpers');
 
 /**
@@ -63,6 +64,7 @@ module.exports = function (options) {
     entry: {
 
       'polyfills': './src/polyfills.browser.ts',
+      'vendor': './src/vendor.browser.ts',
       'main':      AOT ? './src/main.browser.aot.ts' :
                   './src/main.browser.ts'
 
@@ -77,10 +79,10 @@ module.exports = function (options) {
 
       /**
        * An array of extensions that should be used to resolve modules.
-       *
+       * //需要解析文件后缀
        * See: http://webpack.github.io/docs/configuration.html#resolve-extensions
        */
-      extensions: ['.ts', '.js', '.json'],
+      extensions: ['.ts', '.js', '.json','.css','.scss'],
 
       /**
        * An array of directory names to be resolved to the current directory
@@ -96,7 +98,7 @@ module.exports = function (options) {
      */
     module: {
 
-      rules: [
+      rules: [ // 解析规则
 
         /**
          * Typescript loader support for .ts
@@ -211,12 +213,14 @@ module.exports = function (options) {
      * See: http://webpack.github.io/docs/configuration.html#plugins
      */
     plugins: [
+
+
       // Use for DLLs
-      // new AssetsPlugin({
-      //   path: helpers.root('dist'),
-      //   filename: 'webpack-assets.json',
-      //   prettyPrint: true
-      // }),
+      new AssetsPlugin({
+        path: helpers.root('dist'),
+        filename: 'webpack-assets.json',
+        prettyPrint: true
+      }),
 
       /**
        * Plugin: ForkCheckerPlugin
@@ -237,20 +241,22 @@ module.exports = function (options) {
         name: 'polyfills',
         chunks: ['polyfills']
       }),
+
+
       /**
        * This enables tree shaking of the vendor modules
        */
-      // new CommonsChunkPlugin({
-      //   name: 'vendor',
-      //   chunks: ['main'],
-      //   minChunks: module => /node_modules/.test(module.resource)
-      // }),
+      new CommonsChunkPlugin({
+        name: 'vendor',
+        chunks: ['main'],
+        minChunks: module => /node_modules/.test(module.resource)
+      }),
       /**
        * Specify the correct order the scripts will be injected in
        */
-      // new CommonsChunkPlugin({
-      //   name: ['polyfills', 'vendor'].reverse()
-      // }),
+      new CommonsChunkPlugin({
+        name: ['polyfills', 'vendor'].reverse()
+      }),
       // new CommonsChunkPlugin({
       //   name: ['manifest'],
       //   minChunks: Infinity,
@@ -366,6 +372,13 @@ module.exports = function (options) {
         headTags: require('./head-config.common')
       }),
 
+      //自动组件加载
+      new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        "window.jQuery": "jquery"
+      }),
+      // $("#item") //
       /**
        * Plugin LoaderOptionsPlugin (experimental)
        *

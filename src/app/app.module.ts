@@ -1,38 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // 动画
 import { HttpModule } from '@angular/http';
-import {
-  NgModule,
-  ApplicationRef
-} from '@angular/core';
-import {
-  removeNgStyles,
-  createNewHosts,
-  createInputTransfer
-} from '@angularclass/hmr';
-import {
-  RouterModule,
-  PreloadAllModules
-} from '@angular/router';
+import {NgModule, ApplicationRef} from '@angular/core';
+import {removeNgStyles, createNewHosts, createInputTransfer} from '@angularclass/hmr';
+import {RouterModule, PreloadAllModules} from '@angular/router';
 
-/*
- * Platform and Environment providers/directives/pipes
- */
+import { PagesModule } from "./pages/pages.module";
+import { ThemeModule } from "./theme/themeModule"
+
 import { ENV_PROVIDERS } from './environment';
-import { ROUTES } from './app.routes';
-// App is our top level component
+import { routing } from './app.routes';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
-import { HomeComponent } from './home';
-import { AboutComponent } from './about';
-import { NoContentComponent } from './no-content';
-import { XLargeDirective } from './home/x-large';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
 
-// Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState
@@ -44,30 +29,22 @@ type StoreType = {
   disposeOldHosts: () => void
 };
 
-/**
- * `AppModule` is the main entry point into Angular2's bootstraping process
- */
 @NgModule({
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    AboutComponent,
-    HomeComponent,
-    NoContentComponent,
-    XLargeDirective
   ],
-  /**
-   * Import Angular's modules.
-   */
+
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
+    PagesModule,
+    ThemeModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(routing, { useHash: false, preloadingStrategy: PreloadAllModules })
   ],
-  /**
-   * Expose our Services and Providers into Angular's dependency injection.
-   */
+
   providers: [
     ENV_PROVIDERS,
     APP_PROVIDERS

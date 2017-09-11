@@ -1,0 +1,7 @@
+<ng4-quill
+  [(ngModel)]="editorContent"
+  [options]="editorOptions"
+  (blur)="onEditorBlured($event)"
+  (focus)="onEditorFocused($event)"
+  (ready)="onEditorCreated($event)"
+  (change)="onContentChanged($event)"></ng4-quill>
